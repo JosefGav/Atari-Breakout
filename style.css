@@ -4,6 +4,10 @@
     --wallHeight: 0;
 }
 
+body {
+    overflow: hidden;
+}
+
 #canvas {
     display: relative;
 }
@@ -12,7 +16,7 @@
     display:block;
     height:100%;
     width:100%;
-    background-color: black;
+    background-color: green;
 }
 
 #wall {

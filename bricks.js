@@ -90,6 +90,15 @@ class Brick {
     get bottomLeft(){
         return this._bottomLeft;;
     }
+
+    checkCollisionSides(ball,ballradius){
+        if (ball.x < this.right &&
+            rect1.x + rect1.width > rect2.x &&
+            rect1.y < rect2.y + rect2.height &&
+            rect1.y + rect1.height > rect2.y) {
+             // collision detected!
+         }
+    }
 }
 
 setInterval(()=>{
@@ -124,7 +133,7 @@ setInterval(()=>{
 },500)
 
 function setup(){
-    ball = new Ball(document.getElementById("ball"),2,2,50,50,30)
+    ball = new Ball(document.getElementById("ball"),2,2,51,50,30)
 
     for (let r = 0; r < 4; r++) {
         const row = [];
@@ -145,8 +154,7 @@ function setup(){
 setInterval(() => {
     slider.style.left = `${mouseX-sliderWidth/2}px`;
     ball.updateBallPosition();
-
-
+    ball.checkCollision();  
 
 }, 1000/60);
 
