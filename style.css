@@ -1,0 +1,37 @@
+:root {
+    --wallColumns:8;
+    --wallRows:4;
+    --wallHeight: 0;
+}
+
+#canvas {
+    display: relative;
+}
+
+.brick {
+    display:block;
+    height:100%;
+    width:100%;
+    background-color: black;
+}
+
+#wall {
+    margin-top: 100px;
+    display: inline-grid;
+    height: 200px;
+    width:100%;
+    column-gap: 10px;
+    row-gap: 10px;
+    grid-template-columns: repeat(var(--wallColumns),1fr);
+    grid-template-rows: repeat(var(--wallRows),1fr);
+}
+
+#slider {
+    position: absolute;
+    bottom:50px;
+    width:20%;
+    height: 30px;
+    background-color: black;
+    left:0px;
+}
+
