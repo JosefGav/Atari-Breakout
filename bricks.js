@@ -2,19 +2,24 @@ const root = document.querySelector(':root');
 const canvas = document.getElementById("canvas");
 
 const wallElem = document.getElementById("wall");
+let sliderWidth = window.innerWidth/5;
+let ball;
+
 let wall = []
 
 const slider = document.getElementById("slider");
-const sliderWidth = canvas.clientWidth/5;
 const sliderHeigth = 50;
 const brickWidth = 100;
 let numberOfColumns;
+
 
 
 const brickStatuses = {
     destroyed: "destroyed",
     active: "active",
 }
+
+
 
 class Brick {
     constructor(x,y,elem,status,bounds){
@@ -69,6 +74,21 @@ class Brick {
             x: bounds.left,
             y: bounds.top,
         }
+
+        
+    }
+
+    get topRight(){
+        return this._topRight;
+    }
+    get topLeft(){
+        return this._topLeft;
+    }
+    get bottomRight(){
+        return this._bottomRight;
+    }
+    get bottomLeft(){
+        return this._bottomLeft;;
     }
 }
 
@@ -76,10 +96,20 @@ setInterval(()=>{
     numberOfColumns = Math.floor(window.innerWidth / brickWidth);
     root.style.setProperty("--wallColumns",numberOfColumns)
 
-    if (wall.length < 4 * numberOfColumns ||
-        wall.length > 4 * numberOfColumns
+    let length = 0;
+    for (let y = 0; y < wall.length;y++){
+        for (let x = 0; x < wall[y].length;x++){
+            length++;
+        }
+    }
+
+    if (length < 4 * numberOfColumns ||
+        length > 4 * numberOfColumns
         ) 
-    {
+    {   
+        console.log(wall.length)
+        console.log(4*numberOfColumns)
+        console.log(1)
         wall = [];
         wallElem.innerHTML = '';
         setup()
@@ -89,10 +119,13 @@ setInterval(()=>{
                 wall[y][x].setBounds(wall[y][x].element.getBoundingClientRect())
             }
         } 
+        sliderWidth = window.innerWidth/5;
     }
-},100)
+},500)
 
 function setup(){
+    ball = new Ball(document.getElementById("ball"),2,2,50,50,30)
+
     for (let r = 0; r < 4; r++) {
         const row = [];
         for(let c = 0; c < numberOfColumns;c++){
@@ -102,7 +135,6 @@ function setup(){
             element.className = "brick";
             wallElem.appendChild(element);
             
-            //element doesnt load into dom before brick is created
             const brick = new Brick(c,r,element,brickStatuses.active);
             row.push(brick);
         }
@@ -112,7 +144,7 @@ function setup(){
 
 setInterval(() => {
     slider.style.left = `${mouseX-sliderWidth/2}px`;
-
+    ball.updateBallPosition();
 
 
 
