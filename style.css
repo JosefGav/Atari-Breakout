@@ -49,3 +49,17 @@ body {
 
 }
 
+.yellow {
+    background-color:yellow !important; 
+}
+
+.red {
+    background-color: red !important;
+}
+
+.destroyed {
+    visibility: hidden;
+}
+
+
+

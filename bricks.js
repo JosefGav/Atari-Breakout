@@ -17,6 +17,8 @@ let numberOfColumns;
 const brickStatuses = {
     destroyed: "destroyed",
     active: "active",
+    red: "red",
+    yellow: "yellow"
 }
 
 
@@ -55,6 +57,7 @@ class Brick {
     }
     set status(status){
         this._status = status
+        this._element.classList.add(status)
     }
 
     setBounds(bounds) {
@@ -91,15 +94,43 @@ class Brick {
         return this._bottomLeft;;
     }
 
-    checkCollisionSides(ball,ballradius){
-        if (ball.x < this.right &&
-            rect1.x + rect1.width > rect2.x &&
-            rect1.y < rect2.y + rect2.height &&
-            rect1.y + rect1.height > rect2.y) {
-             // collision detected!
-         }
+    checkCollisionSides(){
+        if (
+            // ball.x + ball.diameter/2 > this._topRight._x &&
+            // ball.x - ball.diameter/2 < this._topLeft._x && 
+            // ball.y+ ball.diameter/2 > this._bottomLeft._y &&
+            // ball.y - ball.diameter/2 < this._topLeft._y
+            ball.x - ball.diameter/2< this._topRight.x &&
+            ball.x + ball.diameter/2> this._topLeft.x && 
+            ball.y - ball.diameter/2< this._bottomLeft.y &&
+            ball.y  + ball.diameter/2> this._topLeft.y
+        )
+    {
+        console.log('test')
+        
+        if (this.status === brickStatuses.active)this.status = brickStatuses.yellow;
+        else if (this.status === brickStatuses.yellow)this.status = brickStatuses.red;
+        else if (this.status === brickStatuses.red)this.status = brickStatuses.destroyed;
+        console.log(this.elementclassList)
+
+        if (ball.x < this._topLeft.x  ||
+        ball.x > this._topRight.x ){
+            console.log("colx")
+            ball.speedX *= -1;
+        }
+        if (
+            ball.y < this._topLeft.y ||
+            ball.y  > this._bottomLeft.y /2
+        ) {
+            console.log("coly")
+            ball.speedY *= -1;
+        }
+
+    }
+         
     }
 }
+
 
 setInterval(()=>{
     numberOfColumns = Math.floor(window.innerWidth / brickWidth);
@@ -133,7 +164,7 @@ setInterval(()=>{
 },500)
 
 function setup(){
-    ball = new Ball(document.getElementById("ball"),2,2,51,50,30)
+    ball = new Ball(document.getElementById("ball"),6,6,window.innerWidth/2,window.innerHeight*2/3,30)
 
     for (let r = 0; r < 4; r++) {
         const row = [];

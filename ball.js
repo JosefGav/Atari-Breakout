@@ -22,12 +22,32 @@ class Ball {
     set x(x){
         this._x = x;
     }
+    get y(){
+        return this._y;
+    }
+    set y(y){
+        this._y = y;
+    }
     
     get diameter(){
         return this._diameter;
     }
     set diameter(d){
         this._diameter = d;
+    }
+
+    get speedX(){
+        return this._speedX;
+    }
+    set speedX(speedX){
+        this._speedX = speedX;
+    }
+    
+    get speedY(){
+        return this._speedY;
+    }
+    set speedY(speedY){
+        this._speedY = speedY;
     }
     
 
@@ -39,16 +59,19 @@ class Ball {
         this._element.style.top = `${this._y}px`;
     }
 
-    checkBrickCollision(){
-
-    }
-
     checkCollision(){
-        console.log(1)
         if (this._x + this._diameter/2 > window.innerWidth || this._x < this._diameter/2) this._speedX*=-1;
-        if (this._y + this._diameter/2 > window.innerHeight || this._y < this._diameter/2) this._speedY*=-1;
+        if (this._y < this._diameter/2) this._speedY*=-1;
 
         //checks slider collision
-        if (this._y + this._diameter/2 > window.innerHeight - 50 -sliderHeigth && this._x + this._diameter/2 < slider.getBoundingClientRect().right && this._x - this._diameter/2 > slider.getBoundingClientRect().left) this._speedY*=-1;
+        if (this._y + this._diameter/2 > window.innerHeight - 50 -sliderHeigth && this._x - this._diameter/2 < slider.getBoundingClientRect().right && this._x + this._diameter/2 > slider.getBoundingClientRect().left && this._y < window.innerHeight - 100) this._speedY*=-1;
+
+        for (let y = 0; y < wall.length;y++){
+            for (let x = 0; x < wall[y].length;x++){
+                if (wall[y][x].status != brickStatuses.destroyed) {
+                    wall[y][x].checkCollisionSides()
+                }
+            }
+        }
     }
 } 
