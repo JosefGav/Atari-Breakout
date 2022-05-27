@@ -112,7 +112,7 @@ class Brick {
             console.log("colx")
             ball.speedX *= -1;
         }
-        if (
+        else if (
             ball.y < this._topLeft.y ||
             ball.y  > this._bottomLeft.y  
         ) {
