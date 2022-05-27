@@ -1,3 +1,4 @@
+
 class Ball {
     constructor(elem,speedX,speedY,x,y,diameter) {
         //use noise to change speed on collision 

@@ -96,22 +96,16 @@ class Brick {
 
     checkCollisionSides(){
         if (
-            // ball.x + ball.diameter/2 > this._topRight._x &&
-            // ball.x - ball.diameter/2 < this._topLeft._x && 
-            // ball.y+ ball.diameter/2 > this._bottomLeft._y &&
-            // ball.y - ball.diameter/2 < this._topLeft._y
             ball.x - ball.diameter/2< this._topRight.x &&
             ball.x + ball.diameter/2> this._topLeft.x && 
             ball.y - ball.diameter/2< this._bottomLeft.y &&
             ball.y  + ball.diameter/2> this._topLeft.y
         )
     {
-        console.log('test')
-        
         if (this.status === brickStatuses.active)this.status = brickStatuses.yellow;
         else if (this.status === brickStatuses.yellow)this.status = brickStatuses.red;
         else if (this.status === brickStatuses.red)this.status = brickStatuses.destroyed;
-        console.log(this.elementclassList)
+        
 
         if (ball.x < this._topLeft.x  ||
         ball.x > this._topRight.x ){
@@ -120,12 +114,12 @@ class Brick {
         }
         if (
             ball.y < this._topLeft.y ||
-            ball.y  > this._bottomLeft.y /2
+            ball.y  > this._bottomLeft.y  
         ) {
             console.log("coly")
             ball.speedY *= -1;
         }
-
+        
     }
          
     }
@@ -184,8 +178,8 @@ function setup(){
 
 setInterval(() => {
     slider.style.left = `${mouseX-sliderWidth/2}px`;
+
     ball.updateBallPosition();
     ball.checkCollision();  
-
 }, 1000/60);
 
