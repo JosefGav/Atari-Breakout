@@ -65,7 +65,19 @@ class Ball {
         if (this._y < this._diameter/2) this._speedY*=-1;
 
         //checks slider collision
-        if (this._y + this._diameter/2 > window.innerHeight - 50 -sliderHeigth && this._x - this._diameter/2 < slider.getBoundingClientRect().right && this._x + this._diameter/2 > slider.getBoundingClientRect().left && this._y < window.innerHeight - 100) this._speedY*=-1;
+        if (this._y + this._diameter/2 > window.innerHeight - 50 -sliderHeigth && this._x - this._diameter/2 < slider.getBoundingClientRect().right && this._x + this._diameter/2 > slider.getBoundingClientRect().left && this._y < window.innerHeight - 100) {
+            if (this._x < (slider.getBoundingClientRect().right+slider.getBoundingClientRect().left)/2 && Math.abs(this._speedX) === this._speedX) {
+                this._speedY*=-1;
+                this._speedX*=-1;
+            } else if (this._x > (slider.getBoundingClientRect().right+slider.getBoundingClientRect().left)/2 && Math.abs(this._speedX) === this._speedX * -1) {
+                this._speedY*=-1;
+                this._speedX*=-1;
+            } else if (this._x > (slider.getBoundingClientRect().right+slider.getBoundingClientRect().left)/2 && Math.abs(this._speedX) === this._speedX) {
+                this._speedY*=-1;
+            } else if (this._x < (slider.getBoundingClientRect().right+slider.getBoundingClientRect().left)/2 && Math.abs(this._speedX) === this._speedX * -1) {
+                this._speedY*=-1;
+            }
+        }
 
         for (let y = 0; y < wall.length;y++){
             for (let x = 0; x < wall[y].length;x++){
