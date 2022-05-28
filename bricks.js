@@ -29,6 +29,7 @@ class Brick {
         this._y = y;    
         this._element = elem;
         this._status = status;
+        this._cooldown = false;
     }
 
     get x(){
@@ -94,12 +95,13 @@ class Brick {
         return this._bottomLeft;;
     }
 
-    checkCollisionSides(){
+    checkCollisionSides(x,y){
         if (
             ball.x - ball.diameter/2< this._topRight.x &&
             ball.x + ball.diameter/2> this._topLeft.x && 
             ball.y - ball.diameter/2< this._bottomLeft.y &&
-            ball.y  + ball.diameter/2> this._topLeft.y
+            ball.y  + ball.diameter/2> this._topLeft.y &&
+            this._cooldown === false
         )
     {
         if (this.status === brickStatuses.active)this.status = brickStatuses.yellow;
@@ -107,19 +109,29 @@ class Brick {
         else if (this.status === brickStatuses.red)this.status = brickStatuses.destroyed;
         
 
-        if (ball.x < this._topLeft.x  ||
-        ball.x > this._topRight.x ){
-            console.log("colx")
-            ball.speedX *= -1;
-        }
-        else if (
+        
+        if (
             ball.y < this._topLeft.y ||
             ball.y  > this._bottomLeft.y  
         ) {
             console.log("coly")
             ball.speedY *= -1;
         }
+        if (ball.x < this._topLeft.x  ||
+        ball.x > this._topRight.x ){
+            console.log("colx")
+            ball.speedX *= -1;
+        }
+
         
+
+        y = wall.length;
+        x = wall[y].length;
+        
+        this._cooldown = true;
+        setTimeout(() => {
+            this._cooldown = false;
+        }, 100);
     }
          
     }
@@ -158,7 +170,7 @@ setInterval(()=>{
 },500)
 
 function setup(){
-    ball = new Ball(document.getElementById("ball"),6,6,window.innerWidth/2,window.innerHeight*2/3,30)
+    ball = new Ball(document.getElementById("ball"),8,8,window.innerWidth/2,window.innerHeight*2/3,30)
 
     for (let r = 0; r < 4; r++) {
         const row = [];

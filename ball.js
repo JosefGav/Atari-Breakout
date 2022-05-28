@@ -82,7 +82,7 @@ class Ball {
         for (let y = 0; y < wall.length;y++){
             for (let x = 0; x < wall[y].length;x++){
                 if (wall[y][x].status != brickStatuses.destroyed) {
-                    wall[y][x].checkCollisionSides()
+                    wall[y][x].checkCollisionSides(x,y)
                 }
             }
         }
