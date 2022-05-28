@@ -12,7 +12,10 @@ const sliderHeigth = 50;
 const brickWidth = 100;
 let numberOfColumns;
 
-
+let ding;
+function preload(){
+    ding = loadSound("noise.ogg")
+}
 
 const brickStatuses = {
     destroyed: "destroyed",
@@ -104,6 +107,7 @@ class Brick {
             this._cooldown === false
         )
     {
+        ding.play()
         if (this.status === brickStatuses.active)this.status = brickStatuses.yellow;
         else if (this.status === brickStatuses.yellow)this.status = brickStatuses.red;
         else if (this.status === brickStatuses.red)this.status = brickStatuses.destroyed;
@@ -125,13 +129,13 @@ class Brick {
 
         
 
-        y = wall.length;
         x = wall[y].length;
+        y = wall.length;
         
         this._cooldown = true;
         setTimeout(() => {
             this._cooldown = false;
-        }, 100);
+        }, 70);
     }
          
     }
@@ -194,4 +198,6 @@ setInterval(() => {
     ball.updateBallPosition();
     ball.checkCollision();  
 }, 1000/60);
+
+
 

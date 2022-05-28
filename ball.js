@@ -61,11 +61,14 @@ class Ball {
     }
 
     checkCollision(){
-        if (this._x + this._diameter/2 > window.innerWidth || this._x < this._diameter/2) this._speedX*=-1;
-        if (this._y < this._diameter/2) this._speedY*=-1;
+        if (this._x + this._diameter/2 > window.innerWidth || this._x < this._diameter/2) {this._speedX*=-1; ding.play()}
+
+        if (this._y < this._diameter/2) {this._speedY*=-1;ding.play()}
 
         //checks slider collision
         if (this._y + this._diameter/2 > window.innerHeight - 50 -sliderHeigth && this._x - this._diameter/2 < slider.getBoundingClientRect().right && this._x + this._diameter/2 > slider.getBoundingClientRect().left && this._y < window.innerHeight - 100) {
+                    ding.play()
+
             if (this._x < (slider.getBoundingClientRect().right+slider.getBoundingClientRect().left)/2 && Math.abs(this._speedX) === this._speedX) {
                 this._speedY*=-1;
                 this._speedX*=-1;
