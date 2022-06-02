@@ -75,3 +75,10 @@ class Ball {
         }
     }
 } 
+
+document.addEventListeners("key-down",e=>{
+    if (e.keyCode === 32) {
+       ball.x = window.innerWidth /2;
+       ball.y = window.innerHeight * 2/3
+    }
+})
